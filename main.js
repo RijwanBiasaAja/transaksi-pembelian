@@ -46,7 +46,7 @@ export async function ambilDaftarBarang() {
 }
 
 // menambah barang ke keranjang
-export async function TambahBarangKeKeranjang(
+export async function tambahBarangKeKeranjang(
 idbarang,
 nama,
 harga,

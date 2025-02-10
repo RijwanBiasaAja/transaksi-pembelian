@@ -45,7 +45,7 @@
  </table>
 
   <script type="module">
-    import { ambilDaftarBarang, TambahBarangKeKeranjang } from './main.js';
+    import { ambilDaftarBarang, tambahBarangKeKeranjang,ambilDaftarBarangDiKeranjang } from './main.js';
 
     $(document).ready(async function() {
       // menampilkan daftar barang di inventory
@@ -61,14 +61,13 @@
           "<td>" + nomor + "</td>" +
           "<td>" + data.item + "</td>" +
           "<td>" + data.harga + "</td>" +
-          "<td>" + "<a href='#' class=' me-2 link-keranjang' data='" + data.id + "' data-nama='" + data.item + "' data-harga='" + data.harga + "'><i class='bi bi-cart'></i></i></a> "+ "</td>" +
+          "<td>" + "<a href='#' class=' me-2 link-keranjang' data='" + data.id + "' data-nama='" + data.item + "' data-harga='" + data.harga + "'><i class='bi bi-cart-plus'></i></i></a> "+ "</td>" +
           "</tr>"
         )
 
         nomor = nomor + 1
       })
       // selesai menampilkan barang di inventory
-
 
       // menambah barang ke keranjang
       $(".link-keranjang").click(async function() {
@@ -82,10 +81,30 @@
         await tambahBarangKeKeranjang(idbarang, nama, harga, jumlah, idpelanggan, namapelanggan)
         
            console.log("menambah barang ke keranjang")
+           
+          // menampilkan daftar barang yang ada di keranjang
+          let elemenDaftarBarangDiKeranjang = $("#daftar-keranjang > tbody")
+          let daftarBarangDiKeranjang = await ambilDaftarBarangDiKeranjang()
+          let nomorKeranjang = 1
+          let totalKeranjang = 0
+          
+          elemenDaftarBarangDiKeranjang.empty()
+          
+          daftarBarangDiKeranjang.forEach((data) => {
+           elemenDaftarBarangDiKeranjang.append(
+              "<tr>" +
+              "<td>" + nomorKeranjang + "</td>" +
+              "<td>" + data.nama + "</td>" +
+              "<td>" + data.harga + "</td>" +
+              "<td>" + data.jumlah + "</td>" +
+              "<td>" + "link hapus" + "</td>" +
+              "</tr>" 
+              )
+              
+              nomorKeranjang++
+          })
+          // selesai menampilkan barang di keranjang
       })
-
-      // menampilkan daftar barang yang ada di keranjang
-
     })
   </script>
 </body>
