@@ -72,3 +72,22 @@ namapelanggan
     console.log(error)
   }
 }
+
+// menampilkan barang di keranjang
+export async function ambilDaftarBarangDiKeranjang() {
+  const refDokumen = collection(basisdata, "transaksi");
+  const kueri = query(refDokumen, orderBy("nama"));
+  const cuplikanKueri = await getDocs(kueri);
+  
+  let hasilKueri = [];
+  cuplikanKueri.forEach((dokumen) => {
+    hasilKueri.push({
+      id: dokumen.id,
+      nama: dokumen.data().nama,
+      jumlah: dokumen.data().jumlah,
+      harga: dokumen.data().harga
+    })
+  })
+
+  return hasilKueri;
+}
